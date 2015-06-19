@@ -3,6 +3,7 @@ package ca.lorenz.vote.action;
 import ca.lorenz.vote.controller.PropostaController;
 import ca.lorenz.vote.controller.PerguntaController;
 import ca.lorenz.vote.controller.MoradorController;
+import ca.lorenz.vote.controller.VoteController;
 import ca.lorenz.vote.model.Proposta;
 import ca.lorenz.vote.model.Pergunta;
 import ca.lorenz.vote.model.Morador;
@@ -18,6 +19,7 @@ public class PropostaAction implements SessionAware {
 	private Map<String, Object> userSession ;
 
 	private Proposta proposta;
+	private int hash;
 	private List<Proposta> propostas;
 	private List<Pergunta> perguntas;
 	private List<Morador> moradores;
@@ -79,8 +81,9 @@ public class PropostaAction implements SessionAware {
 			em.getTransaction().begin();
 			proposta = serv.findByID(proposta.getId());
 			for (Morador m : moradores) {
-				System.out.println("))))))))"+m);
 				m.setProposta(proposta);
+				mServ.save(m);
+				m.setHash(m.hashCode());
 				mServ.save(m);
 			}
 			em.getTransaction().commit();
@@ -101,13 +104,30 @@ public class PropostaAction implements SessionAware {
 	}
 
 	public String vote() {
+		MoradorController mServ = new MoradorController(em);
 		PropostaController serv = new PropostaController(em);
 		PerguntaController pergServ = new PerguntaController(em);
+		VoteController vServ = new VoteController(em);
 
-		proposta = serv.findByID(proposta.getId());
+		Morador morador = mServ.findByHash(hash);
+
+		//validar se o já foi realizado.
+		if ( morador == null || vServ.existsVoto(morador.getProposta().getId(), morador.getId()) ) {
+			return "voted";
+		}
+
+		proposta = morador.getProposta();
 		perguntas = pergServ.findByProposta(proposta);
 
 		return "vote";
+	}
+
+	public String show() {
+		PropostaController serv = new PropostaController(em);
+
+		proposta = serv.findByID(proposta.getId());
+
+		return "show";
 	}
 
 	public void setEm(EntityManager em) {
@@ -136,5 +156,17 @@ public class PropostaAction implements SessionAware {
 
 	public void setSession(Map<String, Object> session) {
 		userSession = session;
+	}
+
+	public void setHash(int hash) {
+		this.hash = hash;
+	}
+
+	public int getHash() {
+		return this.hash;
+	}
+
+	public List<Pergunta> getPerguntas() {
+		return this.perguntas;
 	}
 }

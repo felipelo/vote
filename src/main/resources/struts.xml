@@ -3,12 +3,12 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
-    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <!--<constant name="struts.enable.DynamicMethodInvocation" value="false"/>-->
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.custom.i18n.resources" value="global"/>
     <constant name="struts.locale" value="pt_BR"/>
 
-    <package name="default" namespace="/" extends="struts-default">
+    <package name="default" namespace="/" extends="json-default">
 
         <interceptors>
             <interceptor class="ca.lorenz.interceptor.LoginInterceptor" name="login"/>
@@ -44,13 +44,23 @@
             <result name="novo">/WEB-INF/pages/proposta/novo.jsp</result>
             <result name="novo_moradores">/WEB-INF/pages/proposta/novo_moradores.jsp</result>
             <result name="list">/WEB-INF/pages/proposta/list.jsp</result>
+            <result name="voted">/WEB-INF/pages/error_vote.jsp</result>
+            <result name="show">/WEB-INF/pages/proposta/show.jsp</result>
+        </action>
+
+        <action name="vote" class="ca.lorenz.vote.action.VoteAction" method="vote">
+            <result name="success">/WEB-INF/pages/thanks_vote.jsp</result>
+            <result name="error">/WEB-INF/pages/error_vote.jsp</result>
         </action>
 
         <action name="index" class="ca.lorenz.vote.action.IndexAction" method="index">
             <result name="success">/WEB-INF/pages/index.jsp</result>
         </action>
 
-    </package>
+        <action name="perguntar" class="ca.lorenz.vote.action.VoteAction" method="perguntar">
+            <result name="success" type="json"></result>
+        </action>
 
-    <!-- Add addition packages and configuration here. -->
+    </package>
+    
 </struts>

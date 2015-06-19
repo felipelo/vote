@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Fri May 15 16:47:49 BRT 2015:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014d-591e-53fb-00000a587890 
-on database directory C:\Users\lorenzfe\Documents\vote\db\vote with class loader WebAppClassLoader=Struts Blank@57a54666 
+Fri Jun 19 14:20:50 BRT 2015:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.11.1.1 - (1616546): instance a816c00e-014e-0cd6-5390-000001e6f748 
+on database directory C:\Users\lorenzfe\Documents\vote\db\vote with class loader WebAppClassLoader=Struts Blank@20232964 
 Loaded from file:/C:/Users/lorenzfe/.m2/repository/org/apache/derby/derby/10.11.1.1/derby-10.11.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.7.0_80-ea-b05

@@ -60,6 +60,7 @@ public class Voto implements PersistenceUnit<Integer>, Serializable {
 	}
 
 	public void setMorador(Morador morador) {
+		System.out.println("Voto::setMorador " + morador);
 		this.morador = morador;
 	}
 

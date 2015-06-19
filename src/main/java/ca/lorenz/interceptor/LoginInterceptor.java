@@ -19,7 +19,9 @@ public class LoginInterceptor extends AbstractInterceptor {
 		Object object = session.get( "USER_SESSION" );
 
 		System.out.println("Object > " + object + "name > " + name);
-		if( (object == null) && (!"login".equals(name)) ) {
+		if( (object == null) && !(
+			"login".equals(name) || "vote".equals(name) || "error_vote".equals(name) ||
+			"proposta_vote".equals(name) || "perguntar".equals(name) )) {
 			LOG.debug("Reurning to LOGIN action.");
 			System.out.println("LOGIN --------");
 			return ActionSupport.LOGIN;

@@ -16,6 +16,7 @@ public class Morador implements PersistenceUnit<Integer>, Serializable {
 	private Integer id;
 	private String nome;
 	private String email;
+	private int hash;
 	@ManyToOne
 	private Proposta proposta;
 
@@ -59,6 +60,14 @@ public class Morador implements PersistenceUnit<Integer>, Serializable {
 		this.email = email;
 	}
 
+	public void setHash(int hash) {
+		this.hash = hash;
+	}
+
+	public int getHash() {
+		return this.hash;
+	}
+
 	public void setProposta(Proposta proposta) {
 		this.proposta = proposta;
 	}
@@ -70,5 +79,16 @@ public class Morador implements PersistenceUnit<Integer>, Serializable {
 	@Override
 	public String toString() {
 		return "Morador [id=" + id + ", nome=" + nome + ", email=" + email + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 1;
+		hash = hash * 2 + id;
+		hash = hash * 3 + nome.hashCode();
+		hash = hash * 5 + email.hashCode();
+		hash = hash * 7 + proposta.hashCode();
+
+		return hash;
 	}
 }

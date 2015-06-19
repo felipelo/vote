@@ -88,6 +88,7 @@
                 <tr>
                   <th>Morador</th>
                   <th>Proposta</th>
+                  <th/>
                 </tr>
               </thead>
               </tbody>
@@ -95,6 +96,15 @@
                 <tr>
                   <td>${morador.nome}</td>
                   <td>${proposta}</td>
+                  <td>
+                    <s:url var="pDetalhe" action="proposta_show">
+                      <s:param name="proposta.id" value="%{id}" />
+                    </s:url>
+                    <s:a cssClass="btn btn-default btn-xs" href="%{pDetalhe}" role="button">
+                      <span class="glyphicon glyphicon-eye-open"></span> Detalhe
+                    </s:a>
+                  </td>
+                  </td>
                 </tr>
                 </s:iterator>
               </table>

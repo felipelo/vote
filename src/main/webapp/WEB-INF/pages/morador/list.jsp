@@ -30,6 +30,7 @@
           <th>ID</th>
           <th>Nome</th>
           <th>Email</th>
+          <th>Hash</th>
         </tr>
       </thead>
       </tbody>
@@ -38,6 +39,7 @@
           <td>${id}</td>
           <td>${nome}</td>
           <td>${email}</td>
+          <td>${hash}</td>
         </tr>
         </s:iterator>
       </table>

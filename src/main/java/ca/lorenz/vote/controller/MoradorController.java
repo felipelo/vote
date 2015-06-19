@@ -18,5 +18,18 @@ public class MoradorController extends CommonService<Morador, Integer> {
 
 		return query.getResultList();
 	}
+
+	public Morador findByHash(final int hash) {
+		Morador morador = new Morador();
+		Query query = em.createQuery("SELECT m FROM Morador m WHERE m.hash = :hash");
+		query.setParameter("hash", hash);
+
+		List<Morador> result = query.getResultList();
+		if (result.size() > 0) {
+			morador = result.get(0);
+		}
+
+		return morador;
+	}
 	
 }
