@@ -9,6 +9,7 @@ import ca.lorenz.vote.model.Pergunta;
 import ca.lorenz.vote.model.Morador;
 import org.apache.struts2.interceptor.SessionAware;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.persistence.EntityManager;
@@ -23,6 +24,9 @@ public class PropostaAction implements SessionAware {
 	private List<Proposta> propostas;
 	private List<Pergunta> perguntas;
 	private List<Morador> moradores;
+	private int daysLeft;
+	private long voted;
+	private long newQuest;
 
 	public String novo() {
 		proposta = new Proposta();
@@ -124,8 +128,35 @@ public class PropostaAction implements SessionAware {
 
 	public String show() {
 		PropostaController serv = new PropostaController(em);
+		PerguntaController pServ = new PerguntaController(em);
+		MoradorController mServ = new MoradorController(em);
+		VoteController vServ = new VoteController(em);
 
+		//carrega proposta
 		proposta = serv.findByID(proposta.getId());
+		//carrega perguntas
+		perguntas = pServ.findByProposta(proposta);
+		//carrega dias que faltam
+		Date now = new Date();
+		Date encerramento = proposta.getEncerramento();
+		if (encerramento != null && now.before(encerramento)) {
+			now.setHours(0);
+			now.setMinutes(0);
+			now.setSeconds(0);
+			daysLeft = (int) ((encerramento.getTime() - now.getTime()) / 1000 / 60 / 60 / 24);
+		} else {
+			daysLeft = 0;
+		}
+		//carrega % do votacao
+		int total = mServ.findByProposta(proposta.getId()).size();
+		if (total > 0) {
+			voted = vServ.countVotos(proposta.getId()) * 100;
+			voted = (long) (voted / total);
+		} else {
+			voted = 0;
+		}
+		//carrega novas perguntas
+		newQuest = pServ.countNewQuestions(proposta.getId());
 
 		return "show";
 	}
@@ -168,5 +199,29 @@ public class PropostaAction implements SessionAware {
 
 	public List<Pergunta> getPerguntas() {
 		return this.perguntas;
+	}
+
+	public int getDaysLeft() {
+		return this.daysLeft;
+	}
+
+	public void setDaysLeft(int daysLeft) {
+		this.daysLeft = daysLeft;
+	}
+
+	public long getVoted() {
+		return this.voted;
+	}
+
+	public void setVoted(long voted) {
+		this.voted = voted;
+	}
+
+	public long getNewQuest() {
+		return this.newQuest;
+	}
+
+	public void setNewQuest(long newQuest) {
+		this.newQuest = newQuest;
 	}
 }

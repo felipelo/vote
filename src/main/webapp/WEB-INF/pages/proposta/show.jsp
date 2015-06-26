@@ -24,6 +24,33 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+      .list-group {
+        border-radius: 0;
+      }
+
+      .list-group .list-group-item {
+        background-color: transparent;
+        border: 0;
+        border-radius: 0;
+        padding: 0 16px;
+      }
+
+      .list-group .list-group-item .row-content {
+        display: inline-block;
+        width: calc(100% - 92px);
+        min-height: 66px;
+      }
+
+      .list-group .list-group-item .row-content .least-content {
+        position: absolute;
+        right: 16px;
+        top: 0;
+        color: rgba(0,0,0,.54);
+        font-size: 14px;
+      }
+    </style>
   </head>
 
   <body>
@@ -87,14 +114,27 @@
             </div>
           </div>
 
-          <div class="col-sm-4">
-            <div class="well">Days Left</div>
+          <div class="col-lg-4 col-md-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">                
+                <span style="font-size:40px">${daysLeft}</span> dias pra encerramento
+              </div>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <div class="well">% voted</div>
+          <div class="col-lg-4 col-md-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">                
+                <span style="font-size:40px">${voted}%</span> votado
+              </div>
+            </div>
           </div>
-          <div class="col-sm-4">
-            <div class="well">News QAs</div>
+          <div class="col-lg-4 col-md-4">
+            <div class="panel panel-primary">
+              <div class="panel-heading">                
+                <span style="font-size:40px">${newQuest}</span> perguntas novas
+              </div>
+            </div>
+          </div>
           </div>
 
           <div class="col-sm-7">
@@ -121,8 +161,16 @@
               <s:iterator value="perguntas">
                 <div class="list-group-item">
                   <div class="row-content">
-                    <div class="least-content"><s:date name="data" format="dd/MM/yy" /></div>
+                    <div class="least-content">
+                      <s:date name="data" format="dd/MM/yy" />
+                      <button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle btn-xs">Responder <span class="caret"></span></button>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">Responder</a></li>
+                        <li><a href="#1">Excluir</a></li>
+                      </ul>
+                    </div>
                     <p class="list-group-item-text">${pergunta}</p>
+                    <!--
                     <div class="actionBox">
                       <ul class="commentList">
                         <s:iterator value="respostas">
@@ -135,6 +183,7 @@
                         </s:iterator>
                       </ul>
                     </div>
+                    -->
                   </div>
                 </div>
                 <div class="list-group-separator"></div>

@@ -30,4 +30,11 @@ public class VoteController extends CommonService<Voto, Integer> {
 		return result.size() > 0;
 	}
 
+	public long countVotos(final int idProposta) {
+		Query query = em.createQuery("SELECT COUNT(v) FROM Voto v WHERE v.proposta.id = :idProposta AND v.voto = TRUE");
+		query.setParameter("idProposta", idProposta);
+
+		return (Long) query.getSingleResult();
+	}
+
 }

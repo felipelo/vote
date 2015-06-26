@@ -21,4 +21,11 @@ public class PerguntaController extends CommonService<Pergunta, Integer> {
 		return query.getResultList();
 	}
 
+    public long countNewQuestions(int idProposta) {
+        Query query = em.createQuery("SELECT COUNT(p) FROM Pergunta p WHERE p.proposta.id = :propostaId AND p.respostas IS EMPTY");
+        query.setParameter("propostaId", idProposta);
+
+        return (Long) query.getSingleResult();
+    }
+
 }
